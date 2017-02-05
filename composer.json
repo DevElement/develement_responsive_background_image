@@ -14,7 +14,7 @@
 
   "autoload": {
     "psr-4": {
-      "DevElement\\DevelementResponsiveBackgroundImg\\": "Classes/"
+      "DevElement\\DevelementResponsiveBackgroundImage\\": "Classes/"
     }
   },
 
