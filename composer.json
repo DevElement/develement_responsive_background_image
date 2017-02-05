@@ -1,0 +1,30 @@
+{
+  "name": "develement/develement-responsive-background-image",
+  "description": "TYPO3 Extension: Responsive background image view helper",
+  "type": "typo3-cms-extension",
+
+  "keywords": [
+    "TYPO3",
+    "CMS",
+    "Bootstrap",
+    "Responsive"
+  ],
+  "homepage": "https://github.com/DevElement/develement_responsive_background_image.git",
+  "license": "LGPL-3.0+",
+
+  "autoload": {
+    "psr-4": {
+      "DevElement\\DevelementResponsiveBackgroundImg\\": "Classes/"
+    }
+  },
+
+  "version": "1.0.0",
+
+  "authors": [
+    {
+      "name": "Jesper Paardekooper",
+      "email": "j.paardekooper@develement.nl",
+      "homepage": "https://www.develement.nl"
+    }
+  ]
+}
