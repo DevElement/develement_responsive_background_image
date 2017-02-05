@@ -3,7 +3,7 @@ Fluid view helper to render responsive background images
 
 ## Example usage
 ```
-{namespace d=DevElement\DevelementResponsiveBackgroundImg\ViewHelper}
+{namespace d=DevElement\DevelementResponsiveBackgroundImage\ViewHelper}
 <d:responsiveBackgroundImage image="{files.0}" id="banner-{uid}">
     <div class="banner" id="banner-{uid}"></div>
 </d:responsiveBackgroundImage>
