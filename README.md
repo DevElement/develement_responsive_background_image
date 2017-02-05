@@ -27,4 +27,4 @@ Add the following to the ``repositories`` block in your composer.json:
 }
 ```    
 
-And run ``composer require develement/develement-responsive-background-image``.
+And run ``composer require develement/develement-responsive-background-image dev-master``.

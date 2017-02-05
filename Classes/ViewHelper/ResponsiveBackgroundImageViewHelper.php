@@ -1,10 +1,10 @@
 <?php
-namespace DevElement\DevelementResponsiveBackgroundImg\ViewHelper;
+namespace DevElement\DevelementResponsiveBackgroundImage\ViewHelper;
 
 /**
  * View helper: Responsive background image
  *
- * @package KoninklijkeCollective\KoningResponsiveBackgroundImg\ViewHelper
+ * @package DevElement\DevelementResponsiveBackgroundImage\ViewHelper
  */
 class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
