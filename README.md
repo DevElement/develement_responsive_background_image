@@ -24,7 +24,7 @@ Add the following to the ``repositories`` block in your composer.json:
 {
   "type": "vcs",
   "url": "https://github.com/DevElement/develement_responsive_background_image.git"
-},
+}
 ```    
 
 And run ``composer require develement/develement-responsive-background-image``.
