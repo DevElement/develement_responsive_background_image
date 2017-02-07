@@ -75,6 +75,7 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
             }
         }
 
+        $this->tag->forceClosingTag(true);
         $this->tag->setContent($this->renderChildren());
         return $this->tag->render();
     }
