@@ -75,9 +75,7 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
             }
         }
 
-        $content = $this->tag->render();
-        $content .= $this->renderChildren();
-        $content .= '</div>';
-        return $content;
+        $this->tag->setContent($this->renderChildren());
+        return $this->tag->render();
     }
 }
