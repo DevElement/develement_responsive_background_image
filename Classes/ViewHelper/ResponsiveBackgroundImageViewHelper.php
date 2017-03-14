@@ -26,6 +26,12 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
     protected $imageService;
 
     /**
+     * @var \TYPO3\CMS\Core\Resource\ResourceFactory
+     * @inject
+     */
+    protected $resourceFactory;
+
+    /**
      * @var string
      */
     protected $tagName = 'div';
@@ -42,13 +48,18 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
     }
 
     /**
-     * @param \TYPO3\CMS\Core\Resource\FileInterface $image
+     * @param \TYPO3\CMS\Core\Resource\FileInterface|string $image
      * @param array $includedBreakPoints
      * @return string
      */
     public function render($image, $includedBreakPoints = ['lg', 'md', 'sm', 'xs', 'low-res'])
     {
-        if ($image instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+        if (!($image instanceof \TYPO3\CMS\Core\Resource\FileReference)) {
+            // FlexForm compatibility
+            $image = $this->resourceFactory->retrieveFileOrFolderObject($image);
+        }
+
+        if ($image instanceof \TYPO3\CMS\Core\Resource\FileInterface) {
             foreach ($includedBreakPoints as $breakPoint) {
                 if (array_key_exists($breakPoint, $this->breakPointConfig)) {
                     if ($breakPoint === 'lg') {
