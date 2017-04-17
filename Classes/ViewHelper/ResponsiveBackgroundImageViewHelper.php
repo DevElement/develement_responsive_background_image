@@ -12,7 +12,7 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
      * @var array
      */
     protected $breakPointConfig = [
-        'lg'        => null,
+        'lg'        => 1920,
         'md'        => 1199,
         'sm'        => 991,
         'xs'        => 767,
@@ -62,24 +62,19 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
         if ($image instanceof \TYPO3\CMS\Core\Resource\FileInterface) {
             foreach ($includedBreakPoints as $breakPoint) {
                 if (array_key_exists($breakPoint, $this->breakPointConfig)) {
-                    if ($breakPoint === 'lg') {
-                        // Original is lg
-                        $this->tag->addAttribute('data-lg', '/' . $image->getPublicUrl());
-                    } else {
-                        $processingInstructions = [
-                            'width' => (int)$this->breakPointConfig[$breakPoint]
-                        ];
+                    $processingInstructions = [
+                        'width' => (int)$this->breakPointConfig[$breakPoint]
+                    ];
 
-                        $processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
-                        if ($processedImage instanceof \TYPO3\CMS\Core\Resource\ProcessedFile) {
-                            if ($breakPoint === 'low-res') {
-                                // Low res will be rendered inline as base64
-                                $base64 = 'data:' . $image->getMimeType() . ';base64,' . base64_encode($processedImage->getContents());
-                                $this->tag->addAttribute('style', 'background-image: url(' . $base64 . ')');
-                            } else {
-                                // All others will be data attributes
-                                $this->tag->addAttribute('data-' . $breakPoint, '/' . $processedImage->getPublicUrl());
-                            }
+                    $processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
+                    if ($processedImage instanceof \TYPO3\CMS\Core\Resource\ProcessedFile) {
+                        if ($breakPoint === 'low-res') {
+                            // Low res will be rendered inline as base64
+                            $base64 = 'data:' . $image->getMimeType() . ';base64,' . base64_encode($processedImage->getContents());
+                            $this->tag->addAttribute('style', 'background-image: url(' . $base64 . ')');
+                        } else {
+                            // All others will be data attributes
+                            $this->tag->addAttribute('data-' . $breakPoint, '/' . $processedImage->getPublicUrl());
                         }
                     }
                 }

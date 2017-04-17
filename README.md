@@ -12,7 +12,7 @@ Fluid view helper to render responsive background images
 ## Breakpoints
 
 By default, breakpoints for bootstrap are configured:
-- lg: the default image is rendered
+- lg: image will get resizes to ``1920px``
 - md: (> 992px and < 1199px), image will get resized to ``1199px``
 - sm: (> 768px and < 991px), image will get resized to ``991px``
 - xs: (> 480px and < 767px), image will get resized to ``767px``
@@ -28,3 +28,5 @@ Add the following to the ``repositories`` block in your composer.json:
 ```    
 
 And run ``composer require develement/develement-responsive-background-image dev-master``.
+
+Make sure ``EXT:develement_responsive_background_image/Resources/Public/JavaScript/bg-responsive.js`` is included.
