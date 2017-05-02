@@ -182,7 +182,6 @@
         } else  {
             breakpoint = 'lg';
         }
-        console.log(breakpoint);
         return breakpoint;
     };
 
