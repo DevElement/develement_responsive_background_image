@@ -1,6 +1,9 @@
 <?php
 namespace DevElement\DevelementResponsiveBackgroundImage\ViewHelper;
 
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Extbase\Service\ImageService;
+
 /**
  * View helper: Responsive background image
  *
@@ -20,16 +23,32 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
     ];
 
     /**
-     * @var \TYPO3\CMS\Extbase\Service\ImageService
-     * @inject
+     * @var ImageService
      */
     protected $imageService;
 
     /**
-     * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @inject
+     * @param ImageService $imageService
+     * @return void
+     */
+    public function injectImageService(ImageService $imageService): void
+    {
+        $this->imageService = $imageService;
+    }
+
+    /**
+     * @var ResourceFactory
      */
     protected $resourceFactory;
+
+    /**
+     * @param ResourceFactory $resourceFactory
+     * @return void
+     */
+    public function injectResourceFactory(ResourceFactory $resourceFactory): void
+    {
+        $this->resourceFactory = $resourceFactory;
+    }
 
     /**
      * @var string
@@ -45,32 +64,32 @@ class ResponsiveBackgroundImageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
     {
         parent::initializeArguments();
         $this->registerUniversalTagAttributes();
+        $this->registerArgument('image', 'mixed', 'Image', true);
+        $this->registerArgument('includedBreakPoints', 'array', 'Included break points', false, ['lg', 'md', 'sm', 'xs', 'low-res']);
     }
 
     /**
-     * @param \TYPO3\CMS\Core\Resource\FileInterface|string $image
-     * @param array $includedBreakPoints
      * @return string
      */
-    public function render($image, $includedBreakPoints = ['lg', 'md', 'sm', 'xs', 'low-res'])
+    public function render()
     {
-        if (!($image instanceof \TYPO3\CMS\Core\Resource\FileReference)) {
+        if (!($this->arguments['image'] instanceof \TYPO3\CMS\Core\Resource\FileReference)) {
             // FlexForm compatibility
-            $image = $this->resourceFactory->retrieveFileOrFolderObject($image);
+            $this->arguments['image'] = $this->resourceFactory->retrieveFileOrFolderObject($this->arguments['image']);
         }
 
-        if ($image instanceof \TYPO3\CMS\Core\Resource\FileInterface) {
-            foreach ($includedBreakPoints as $breakPoint) {
+        if ($this->arguments['image'] instanceof \TYPO3\CMS\Core\Resource\FileInterface) {
+            foreach ($this->arguments['includedBreakPoints'] as $breakPoint) {
                 if (array_key_exists($breakPoint, $this->breakPointConfig)) {
                     $processingInstructions = [
                         'width' => (int)$this->breakPointConfig[$breakPoint]
                     ];
 
-                    $processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
+                    $processedImage = $this->imageService->applyProcessingInstructions($this->arguments['image'], $processingInstructions);
                     if ($processedImage instanceof \TYPO3\CMS\Core\Resource\ProcessedFile) {
                         if ($breakPoint === 'low-res') {
                             // Low res will be rendered inline as base64
-                            $base64 = 'data:' . $image->getMimeType() . ';base64,' . base64_encode($processedImage->getContents());
+                            $base64 = 'data:' . $this->arguments['image']->getMimeType() . ';base64,' . base64_encode($processedImage->getContents());
                             $this->tag->addAttribute('style', 'background-image: url(' . $base64 . ')');
                         } else {
                             // All others will be data attributes
